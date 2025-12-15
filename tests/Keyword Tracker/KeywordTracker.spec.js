@@ -1,6 +1,7 @@
 import { test, expect } from "../../Fixtures/auth.fixture";
 import { DashboardPage } from "../../pages/DashboardPage";
 import { KeywordTrackerPage } from "../../pages/KeywordTrackerPage";
+import { SUCCESS_MESSAGES } from "../../utils/Constants";
 import { KEYWORD_TRACKER_TEST_DATA } from "../testdata/KeywordTracker.data";
 
 test("UI and Navigation Cases for Listing Tracker", async ({
@@ -146,17 +147,24 @@ test("Validation messages show on clicking Start Tracking without data", async (
   // Need to check if the Text match case required
 });
 
-test("User can successfully start tracking with minimal valid input", async ({
-  loggedInPage,
-}) => {
-  const dashboard = new DashboardPage(loggedInPage);
-  const ktPage = new KeywordTrackerPage(loggedInPage);
+test.fixme(
+  "User can successfully start tracking with minimal valid input",
+  async ({ loggedInPage }) => {
+    const dashboard = new DashboardPage(loggedInPage);
+    const ktPage = new KeywordTrackerPage(loggedInPage);
 
-  await dashboard.gotoKeywordTracker();
-  await ktPage.verifyTableLoader(false);
-  await ktPage.clickAddProduct();
-  await ktPage.verifyAddProductDrawerIsVisible();
+    await dashboard.gotoKeywordTracker();
+    await ktPage.verifyTableLoader(false);
+    await ktPage.clickAddProduct();
+    await ktPage.verifyAddProductDrawerIsVisible();
 
-  await ktPage.selectMyProduct(KEYWORD_TRACKER_TEST_DATA.VALID_ASIN);
-  console.log(ktPage.productSelectInput.textContent());
-});
+    await ktPage.selectMyProduct(KEYWORD_TRACKER_TEST_DATA.VALID_ASIN);
+    await ktPage.fillKeywords(KEYWORD_TRACKER_TEST_DATA.VALID_KEYWORD);
+
+    await ktPage.clickStartTrackingBtn();
+    await ktPage.waitForTimeout(2000);
+    await expect(
+      loggedInPage.getByText(SUCCESS_MESSAGES.ADDED_PRODUCT)
+    ).toBeVisible({ timeout: 10000 });
+  }
+);

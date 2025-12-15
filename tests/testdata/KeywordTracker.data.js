@@ -1,3 +1,4 @@
 export const KEYWORD_TRACKER_TEST_DATA = {
   VALID_ASIN: "B0DFR4LHZN",
+  VALID_KEYWORD: "Sleeping Mat",
 };
