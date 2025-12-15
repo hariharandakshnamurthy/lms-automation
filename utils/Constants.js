@@ -32,3 +32,7 @@ export const STATUS = {
 export const ERROR_MESSAGES = {
   EMPTY_PRODUCT_LINK: "Please enter a product link or ASIN",
 };
+
+export const SUCCESS_MESSAGES = {
+  ADDED_PRODUCT: "Product added successfully",
+};

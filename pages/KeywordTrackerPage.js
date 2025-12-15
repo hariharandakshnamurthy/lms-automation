@@ -17,12 +17,17 @@ export class KeywordTrackerPage {
       .first();
     this.closeProductDrawerBtn = page.getByRole("button", { name: "Close" });
     this.cancelAddProductBtn = page.getByRole("button", { name: "Cancel" });
-    this.startTrackingBtn = page.getByRole("button", {
-      name: "Start Tracking",
-    });
+    this.startTrackingBtn = page
+      .getByRole("button", {
+        name: "Start Tracking",
+      })
+      .first();
     this.asinError = this.addProductDrawer.locator("#asin_help");
     this.keywordsError = this.addProductDrawer.locator("#keywords_help");
-    this.productSelectInput = this.page.locator("//input[@id='asin']").first();
+    this.productSelectInput = this.page.getByRole("combobox", {
+      name: "* Product info-circle",
+    });
+    this.keywordInput = this.page.getByLabel("Keywords");
   }
 
   async verifyTableLoader(isVisible) {
@@ -49,7 +54,7 @@ export class KeywordTrackerPage {
   }
 
   async waitForTimeout() {
-    await this.page.waitForTimeout(3000);
+    await this.page.waitForTimeout(5000);
   }
 
   async clickAddProduct() {
@@ -69,7 +74,9 @@ export class KeywordTrackerPage {
   }
 
   async clickStartTrackingBtn() {
-    await this.startTrackingBtn.click();
+    await expect(this.startTrackingBtn).toBeVisible();
+    // need to handle it gracefully
+    await this.startTrackingBtn.click({ force: true });
   }
 
   async verifyRequiredFieldValidationMessages() {
@@ -77,10 +84,18 @@ export class KeywordTrackerPage {
     await expect(this.keywordsError).toBeVisible();
   }
   async selectMyProduct(asin) {
-    await this.productSelectInput.click();
+    // difficulty due to ant select which restricts input
+    // helpful if we have standard resolutions to cover
+    await this.productSelectInput.focus();
     await this.productSelectInput.fill(asin);
-    await this.page.waitForTimeout(2000);
-
-    await this.page.getByText(asin).click();
+    await this.page.waitForResponse(
+      (res) => res.url().includes("/products/search") && res.status() === 200
+    );
+    await this.page.keyboard.press("ArrowDown");
+    await this.page.keyboard.press("Enter");
+  }
+  async fillKeywords(keyword) {
+    await this.keywordInput.type(keyword, { delay: 100 });
+    await this.page.keyboard.press("Enter");
   }
 }
