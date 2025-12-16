@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { DEFAULT_MARKETPLACE, MARKETPLACES } from "../../utils/Constants.js";
-import { HomePage } from "../../pages/HomePage.js";
+import { DEFAULT_MARKETPLACE, MARKETPLACES } from "../../../utils/Constants.js";
+import { HomePage } from "../../../pages/HomePage.js";
 
 test.setTimeout(60000);
 

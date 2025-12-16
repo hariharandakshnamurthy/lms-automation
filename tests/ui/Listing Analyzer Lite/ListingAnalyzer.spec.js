@@ -1,11 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { HomePage } from "../../pages/HomePage.js";
+import { HomePage } from "../../../pages/HomePage.js";
 import {
   TITLES,
   DEFAULT_MARKETPLACE,
   STATUS,
   ERROR_MESSAGES,
-} from "../../utils/Constants.js";
+} from "../../../utils/Constants.js";
 
 test.describe("ListingAnalyzer - Lite", () => {
   test.beforeEach("Navigate to the Tool", async ({ page }) => {
