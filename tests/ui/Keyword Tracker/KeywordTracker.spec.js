@@ -1,7 +1,7 @@
-import { test, expect } from "../../Fixtures/auth.fixture";
-import { DashboardPage } from "../../pages/DashboardPage";
-import { KeywordTrackerPage } from "../../pages/KeywordTrackerPage";
-import { SUCCESS_MESSAGES } from "../../utils/Constants";
+import { test, expect } from "../../../Fixtures/auth.fixture.js";
+import { DashboardPage } from "../../../pages/DashboardPage";
+import { KeywordTrackerPage } from "../../../pages/KeywordTrackerPage";
+import { SUCCESS_MESSAGES } from "../../../utils/Constants";
 import { KEYWORD_TRACKER_TEST_DATA } from "../testdata/KeywordTracker.data";
 
 test("UI and Navigation Cases for Listing Tracker", async ({
